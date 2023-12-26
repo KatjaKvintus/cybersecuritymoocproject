@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+<BR><BR>
+
+<h3>Admin tools</h3>
+<BR><BR>
+
+<form action="/check_all_recipes">
+<input type="submit" value="Publish oatmeal of the week">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+
+
+{% endblock %}

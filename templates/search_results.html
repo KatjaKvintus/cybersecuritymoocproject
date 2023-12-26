@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/all_recipes'"> Show all recipes </button>
+<button onclick="window.location.href='/logout'"> Log out </button><BR><BR>
+
+<h3>{{ source_route }}:</h3>
+
+<h3>Recipes found: {{ recipe_amount }} </h3><BR><BR>
+{% for recipe in list_of_search_matching_recipes %}
+<hr> 
+<b>{{ recipe[1] }}</b>
+<i>Type: {{ recipe[2] }}</i><BR><BR>
+<form action="/page" method="post">
+<input type="hidden" name ="this_is_recipe_id" value="{{ recipe[0] }}">
+<input type="submit" value="Show the recipe">
+</form>
+</hr>
+
+<BR>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+
+<!DOCTYPE html>
+
+<html>
+<body>
+<script>
+    function change_heart_color() {
+        let icon = document.getElementById("heart");
+        if (icon.style.color == "black") {
+            icon.style.color = "red";
+        }
+        else if (icon.style.color == "red") {
+            icon.style.color = "black";
+        }
+    }
+</script>
+
+<hr>
+<h3>{{ show_this_recipe[1] }}</h3>
+<i>Type: {{ show_this_recipe[2] }}</i><BR><BR>
+<b>Ingredients</b>:<BR>
+1 dl {{ show_this_recipe[4] }}<BR>
+1 dl {{ show_this_recipe[5] }}<BR>S
+0,25 - 0,5 dl {{ show_this_recipe[6] }}<BR>
+0,5 - 1 dl {{ show_this_recipe[7] }}<BR>
+0,5 - 1 dl {{ show_this_recipe[8] }}<BR>
+0,5 - 1 tbs {{ show_this_recipe[9] }}<BR><BR><BR>
+
+Peel and chop/grate fruits/vegetables.<BR><BR>
+Add all ingredients to the bowl and mix well. <BR><BR>
+Cover the bowl with a lid and keep in a refridgerator 1-2 hours or over night.<BR><BR>
+Enjoy!
+<BR><BR><BR>
+<hr>
+<b>{{ note }}</b><BR><BR>
+<hr><BR>
+
+{% for comment in recipe_comments %}
+<i>{{ comment[4] }}:</i><BR><BR>
+{{ comment[3] }}<BR><BR>
+<form action="/delete_comment" method="POST" onsubmit="return check_del(this)">
+<input type="submit" name="del_comment" value="Delete this comment">
+<input type="hidden" name="role" value="{{ session.user_role }}">
+<input type="hidden" name="del_comment_id" value="{{ comment[0] }}">
+</form><BR>
+
+<script>
+function check_del(form) {
+    if (form.role.value != "admin") {
+        alert("Error: this function is only for admins. " +
+        "Contact your admin user if you want this comment to be deleted.");
+        return false;
+    }
+return true;
+}
+</script>
+
+<hr>
+{% endfor %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{{ recipe_fav_status }}<BR>(click to change)
+<form action="/change_fav_status" method="post" >
+<button type="submit" onclick="change_heart_color()">
+<span id="heart" style="color: red;">&#9829;</span>
+</button>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}">
+<BR><BR>
+</form>
+<hr>
+
+<B>Comment this recipe:</B>
+<form action="/add_comment" method="post" onsubmit="return check(this)"><BR>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}"> <BR>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<textarea id="new_comment" name="new_comment" rows="4" cols="50" required></textarea><BR>
+<input type="submit" value="Save"><BR><BR>
+</form>
+
+<script>
+function check(form) {
+    if (form.new_comment.value.length > 1000) {
+        alert("Error: your comment is too long. Please shorten it to maximum 1000 characters. Tip: include only  main ingredient names in the title.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+<hr>
+{{ rating_text }}<BR><BR>
+<i>{{ recipe_stars_status }}</i><BR><BR>
+<B>Review this recipe:</B><BR>
+<i>Scale: 1-5</i><BR>
+<form action="/review" method="POST" onsubmit="return check(this)">
+<input type="radio" name="stars" value="1"> 1 star <span class="star">★</span><BR>
+<input type="radio" name="stars" value="2"> 2 stars <span class="star">★★</span><BR>
+<input type="radio" name="stars" value="3"> 3 stars <span class="star">★★★</span><BR>
+<input type="radio" name="stars" value="4"> 4 stars <span class="star">★★★★</span><BR>
+<input type="radio" name="stars" value="5"> 5 stars <span class="star">★★★★★</span><BR>
+<input type="hidden" name="recipe_id" value="{{ show_this_recipe[0] }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"><BR><BR>
+<input type="submit" value="Rate">
+</form>
+
+<script>
+function check(form) {
+    if (form.stars.value == "") {
+        alert("Please give the rating.");
+        return false;
+    }
+    if ("{{ recipe_stars_status }}" == "You have already reviewed this recipe.") {
+        alert("You can give stars to a recipe only once.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+
+<title>Create a new user account</title><BR><BR>
+
+<b>To use this page you will need an user account.</b><BR><BR>
+
+Creating the account and using this app is free.<BR><BR>
+
+Choose a unique username that has at least 3 characters.<BR><BR>
+
+<form action="/register" method="post" onsubmit="return check(this)">
+Choose username: <BR><input type="text" name="username" minlength="3"> <BR><BR>
+Choose password: <BR><input type="password" name="password1"> <BR><BR>
+Repeat the password: <BR><input type="password" name="password2"> <BR><BR>
+
+User account type: <BR>
+<input type="radio" name="user_type" value="user"> user<BR>
+<input type="radio" name="user_type" value="admin"> admin<BR><BR>
+To create an admin account please provice the current admin key:<BR> 
+<i>(for normal user accounts you can leave this field empty")</i><BR>
+<input type="password" name="admin_key"><BR><BR>
+
+<input type="submit" value="Save">
+</form>
+
+<script>
+function check(form) {
+    if (form.username.value.length < 3) {
+        alert("Error: This username is too short. Please choose one that has at least 3 characters.");
+        return false;
+    }
+    if (form.username.value.length > 20) {
+        alert("Error: This username is too long. Please choose one that has maximum 20 characters.");
+        return false;
+    }
+    if (form.password1.value != form.password2.value) {
+        alert("Error: passwords don't match. Please try again.");
+        return false;
+    }
+    if (form.password1.value.length > 50) {
+        alert("Error: too long password. Are you sure you are going to remember it? Please choose something under 50 characters (and we strongly recommend to keep it under 20).");
+        return false;
+    }
+    if (form.password1.value.length < 3) {
+        alert("Error: This password is too short. Please choose one that has at least 3 characters.");
+        return false;
+    }
+    if (form.user_type.value == "") {
+        alert("Please choose user type.");
+        return false;
+    }
+    
+    return true;
+}
+</script>
+
+<BR><BR>
+<input type="button" value="Log out">
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+<h2>Recipe search</h2>
+<BR><BR>
+
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+
+<h3>Search by type:</h3>
+
+<form action="/recipe_type" method="post">
+<input type="radio" name="type" value="delicacy"> delicacy<BR>
+<input type="radio" name="type" value="gluten free"> gluten free<BR>
+<input type="radio" name="type" value="healthy"> healthy<BR>   
+<input type="radio" name="type" value="power food"> power food<BR>
+<input type="radio" name="type" value="vegan"> vegan<BR><BR>
+<input type="submit" value="Show recipes"><BR><BR>
+</form>
+
+<h3>Search by keyword:</h3>
+
+<form action="/search_function" method="GET">
+<b>Search from recipe names: </b><input type="text" name="query1"><BR><BR>
+<b>Search from recipe ingredients: </b><input type="text" name="query2"><BR><BR>
+<input type="submit" value="Search"><BR><BR>
+</form>
+<hr>
+
+<BR>
+<b>I don't know what I want! Show me a random recipe.</b><BR><BR>
+<form action="/random">
+<input type="submit" value="A random recipe">
+</form>
+
+{% endblock %}

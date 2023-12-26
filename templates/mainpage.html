@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<body>
+
+<p><B>Welcome, {{ session.user_name }} <i>({{ session.user_role }})!</B></i></p>
+<button onclick="window.location.href='/logout'"> Log out </button><BR><BR>
+</a><hr>
+
+<h3>Main functionalities:</h3>
+
+<nav>
+<form action="/add_new_recipe">
+<input type="submit" value="Add a new recipe">
+</form><BR>
+
+<form action="/all_recipes">
+<input type="submit" value="List of all recipes">
+</form><BR>
+
+<form action="/search">
+<input type="submit" value="Recipe search">
+</form><BR>
+
+<form action="/my_favorites">
+<input type="submit" value="My favorites">
+</form><BR>
+
+<form action="/admin_tools" onsubmit="return check(this)">
+<input type="hidden" name="admin_tools" value="{{ session.user_role }}">
+<input type="submit" value="Admin tools">
+</form>
+</nav>
+
+<script>
+function check(form) {
+    if (form.admin_tools.value != "admin") {
+        alert("Error: this function is only for admins.");
+        return false;
+    }
+    return true;
+}
+</script>
+
+
+<BR><hr>
+<h3>Check the highlights:</h3>
+
+<form action="/page", method="post">
+<input type="submit" value="The recipe of the week">
+<input type="hidden" name="this_is_recipe_id" value="{{ index_for_recipe_of_the_week }}">
+</form><BR>
+
+<form action="/page", method="post">
+<input type="submit" value="The latest recipe">
+<input type="hidden" name="this_is_recipe_id" value="{{ latest_recipe[0] }}">
+</form>
+
+</body>
+{% endblock %}
+

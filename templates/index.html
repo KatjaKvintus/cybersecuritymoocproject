@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+
+<form action="/login" method="post" onsubmit="return check(this)">
+<p>Username:<br>
+<input type="text" name="username"></p>
+<p>Password:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Log in">
+</form>
+
+<script>
+    function check(form) {
+        if (form.username.value == "") {
+            alert("Please fill in the username");
+            return false;
+        }
+        if (form.password.value == "") {
+            alert("Please fill in the password");
+            return false;
+        }
+        return true;
+    }
+    </script>
+
+
+<BR><BR>If you don't have an user account, you can create it <a href=\register>here</a>.
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block content %}
+<button onclick="window.location.href='/mainpage'"> Return to the main page </button>
+<button onclick="window.location.href='/logout'"> Log out </button>
+<BR><BR>
+
+<h2>All recipes in the database:</h2>
+
+{% for recipe in recipe_list %}
+{{ recipe[0] }}. {{ recipe[1] }}<BR>
+{% endfor %}
+<BR>
+
+<form action="/set_recipe_of_the_week" method="post" onsubmit="return check(this)">
+I choose recipe number:
+<input type="text" name="recipe_id"><BR>
+<input type="submit" value="Publish">
+</form>
+
+<script>
+    function check(form) {
+        if (form.recipe_id.value < 1) {
+            alert("Error: too small number. Please choose from the list. ");
+            return false;
+        }
+        if (form.recipe_id.value > {{ list_size }}) {
+            alert("Error: too big number. Please choose from the list. ");
+            return false;
+        }
+        return true;
+    }
+    </script>
+
+{% endblock %}
+
