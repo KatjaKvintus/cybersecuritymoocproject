@@ -47,8 +47,10 @@ def create_new_account(name, password, user_type):
     role = user_type
 
     try:
-        sql = "INSERT INTO users (name, password, role) VALUES (" + name + ", " + password + ", " + role + ")"
-        db.session.execute(sql)
+        sql = text("""INSERT INTO users (name, password, role)
+                 VALUES (:name, :password, :role)""")
+
+        db.session.execute(sql, {"name":name, "password":hash_value, "role":role})
         db.session.commit()
 
     except SystemError:
