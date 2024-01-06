@@ -18,6 +18,11 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
+If you don't have postgresslq installed, do it with the following command:
+```bash
+sudo apt install postgresql
+```
+
 Create database schema:
 
 ```bash
