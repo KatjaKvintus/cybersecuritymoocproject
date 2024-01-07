@@ -1,3 +1,5 @@
+SET search_path TO oatmealdb;
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY NOT NULL, 
     name VARCHAR(20) NOT NULL CHECK (length(name) >= 3), 
