@@ -18,13 +18,9 @@ CREATE DATABASE oatmealdb;
 \c oatmealdb
 ```
 
-Create database schema:
+Create the database schema by copying the contenst of the schema.sql file into terminal.
 
-```bash
-psql < schema.sql
-```
-
-Create virtual enviroment:
+Open another tab in terminal and create a virtual enviroment:
 
 ```bash
 python3 -m venv venv
