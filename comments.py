@@ -8,15 +8,25 @@ def add_comment(user_id : int, recipe_id : int, comment_text):
 
     try:
         sql = text("""INSERT INTO comments (user_id, recipe_id, comment_text)
-                VALUES (:user_id, :recipe_id, :comment_text)""")
-
-        db.session.execute(sql, {"user_id":user_id, "recipe_id":recipe_id,
-                                  "comment_text":comment_text})
-
+                VALUES (user_id, recipe_id, comment_text)""")
+        db.session.execute(sql)
         db.session.commit()
 
     except SystemError:
         return False
+
+    ''' 
+    # Lines 16-21 correct the issue and prevents sql injection
+    try:
+        sql = text("""INSERT INTO comments (user_id, recipe_id, comment_text)
+                VALUES (:user_id, :recipe_id, :comment_text)""")
+
+        db.session.execute(sql, {"user_id":user_id, "recipe_id":recipe_id, "comment_text":comment_text})
+        db.session.commit()
+    
+    except SystemError:
+        return False
+        '''
 
     return True
 
