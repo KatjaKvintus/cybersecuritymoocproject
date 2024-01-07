@@ -7,8 +7,7 @@ def add_comment(user_id : int, recipe_id : int, comment_text):
     ''' To add a new comment to the database'''
 
     try:
-        sql = text("""INSERT INTO comments (user_id, recipe_id, comment_text)
-                VALUES (user_id, recipe_id, comment_text)""")
+        sql = text("INSERT INTO comments (user_id, recipe_id, comment_text) VALUES (" + str(user_id) + ", " + str(recipe_id) +", '" + comment_text +"')")
         db.session.execute(sql)
         db.session.commit()
 

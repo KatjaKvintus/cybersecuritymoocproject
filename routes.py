@@ -9,6 +9,8 @@ import comments
 import favorites
 
 
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     '''Route: index.html'''

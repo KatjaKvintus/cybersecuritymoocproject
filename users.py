@@ -1,7 +1,7 @@
 '''All user related functions'''
 import secrets
 from flask import session
-from werkzeug.security import check_password_hash, generate_password_hash
+#from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
 from db import db
 
@@ -29,7 +29,15 @@ def log_in_user(name, password):
     if not user:
         return False
 
-    if not check_password_hash(user[1], password):
+    #if not check_password_hash(user[1], password):
+    if not check_username_and_password_match(name, password):
+        # TESTING
+        print("Username on ", user[1], " ja password on ", password)
+        print("User[0] on", user[0])
+        print("User[1] on", user[1])
+        print("User[2] on", user[2])
+        print("User[3] on", user[3])
+
         return False
 
     session["user_id"] = user[0]
@@ -43,9 +51,20 @@ def log_in_user(name, password):
 def create_new_account(name, password, user_type):
     '''Creates new user account and directs to login'''
 
-    hash_value = generate_password_hash(password)
+    #hash_value = generate_password_hash(password)
     role = user_type
 
+    try:
+
+        sql = text("INSERT INTO users (name, password, role) VALUES ('" + name + "', '" + password + "', '" + role + "')")
+
+        db.session.execute(sql)       
+        db.session.commit()
+
+    except SystemError:
+        return False
+
+    ''' 
     try:
 
         sql = text("""INSERT INTO users (name, password, role)
@@ -53,11 +72,27 @@ def create_new_account(name, password, user_type):
 
         db.session.execute(sql, {"name":name, "password":hash_value, "role":role})       
         db.session.commit()
+        
 
     except SystemError:
         return False
+    
+        '''
 
     return log_in_user(name, password)
+
+
+def check_username_and_password_match(username, password):
+    '''Returns True is given password and username matches'''
+
+    sql = text("SELECT name, password FROM users WHERE name=:username and password=:password")
+    result = db.session.execute(sql, {"username":username, "password":password})
+    list_of_users = result.fetchall()
+
+    if len(list_of_users) < 1:
+        return False
+    else:
+        return True
 
 
 def username_taken(username):
