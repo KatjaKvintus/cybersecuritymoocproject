@@ -438,3 +438,48 @@ def change_fav_status():
         favorites.mark_recipe_as_favorite(recipe_id, user_id)
 
     return redirect("/my_favorites")
+
+
+@app.route("/create_new_admin", methods=["GET", "POST"])
+def create_new_admin():
+    '''Admin can create a new admin user account'''
+
+    if request.method == "GET":
+        return render_template("register.html")
+
+    if request.method == "POST":
+        username = request.form["username"]
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
+        user_type = "admin"
+
+    if len(username) < 3:
+        return render_template("error.html",
+                                message="Too short username. " +
+                                "Please choose one that has at least 3 characters.")
+
+    if len(username) > 20:
+        return render_template("error.html",
+                                message="This username is too long. " +
+                                "Please choose one that has maximum 20 characters.")
+
+    if users.username_taken(username):
+        return render_template("error.html",
+                                message="This username is taken. Please choose another one.")
+
+    if password1 != password2:
+        return render_template("error.html",
+                                message="Passwords don't match. " +
+                               "Please type the sama password twice.")
+
+    if len(password1) < 3:
+        return render_template("error.html",
+                                message="This password is too short. " +
+                               "Please choose one that has at least 3 characters.")
+
+    if not users.create_new_account(username, password1, user_type):
+        return render_template("error.html",
+                                message="Failed to create the user account.")
+
+    return render_template("succesfull_message.html",
+                            message="New admin created! Remember to send them their new username and password.")

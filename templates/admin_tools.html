@@ -13,6 +13,42 @@
 <input type="submit" value="Publish oatmeal of the week">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+<BR><BR>
+
+<b>Add new admin user:</b><BR><BR>
+    <form action="/create_new_admin" method="post" onsubmit="return check(this)">
+        Choose admin username: <BR><input type="text" name="username" minlength="3"> <BR><BR>
+        Choose password: <BR><input type="password" name="password1"> <BR><BR>
+        Repeat the password: <BR><input type="password" name="password2"> <BR><BR>
+              
+        <input type="submit" value="Create new admin user">
+        </form>
+        
+        <script>
+        function check(form) {
+            if (form.username.value.length < 3) {
+                alert("Error: This username is too short. Please choose one that has at least 3 characters.");
+                return false;
+            }
+            if (form.username.value.length > 20) {
+                alert("Error: This username is too long. Please choose one that has maximum 20 characters.");
+                return false;
+            }
+            if (form.password1.value != form.password2.value) {
+                alert("Error: passwords don't match. Please try again.");
+                return false;
+            }
+            if (form.password1.value.length > 50) {
+                alert("Error: too long password. Are you sure you are going to remember it? Please choose something under 50 characters (and we strongly recommend to keep it under 20).");
+                return false;
+            }
+            if (form.password1.value.length < 3) {
+                alert("Error: This password is too short. Please choose one that has at least 3 characters.");
+                return false;
+            }            
+            return true;
+        }
+        </script>
 
 
 {% endblock %}
