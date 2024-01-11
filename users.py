@@ -31,13 +31,6 @@ def log_in_user(name, password):
 
     #if not check_password_hash(user[1], password):
     if not check_username_and_password_match(name, password):
-        # TESTING
-        print("Username on ", user[1], " ja password on ", password)
-        print("User[0] on", user[0])
-        print("User[1] on", user[1])
-        print("User[2] on", user[2])
-        print("User[3] on", user[3])
-
         return False
 
     session["user_id"] = user[0]

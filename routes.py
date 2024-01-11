@@ -348,11 +348,12 @@ def random():
 def admin_tools():
     '''Functionalities for only admin level users'''
 
+    ''' 
     user_role = users.session.user_role
 
     if user_role != "admin":
         return render_template("error.html", message="this section is only for users.")
-
+    '''
     return render_template("admin_tools.html")
 
 
