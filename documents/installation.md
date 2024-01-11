@@ -1,5 +1,5 @@
 
-## Testing the app
+## Instructions for testing
 
 Download the code from top right corner green Code button:(> Download zip). Extract the ZIP file and save in your computer. Add .env file to the root directory and copy the following text below as its content:
 
