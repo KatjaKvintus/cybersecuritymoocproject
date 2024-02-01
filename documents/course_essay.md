@@ -12,10 +12,10 @@ OWASP Top list used in this project:
 OWASP Top 10 2021: https://owasp.org/www-project-top-ten/
 
 
-
 ## FLAW 1: A03 Injection 
 
-link to row: https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/10cee4709ed0f6ada0688e73e2a75683adac8b45/users.py#L57 
+link to row: 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/10cee4709ed0f6ada0688e73e2a75683adac8b45/users.py#L57 
 (rows 57-65)
 
 description of flaw: 
@@ -37,7 +37,8 @@ https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/10cee4709ed0f6ada0
 
 
 ## FLAW 2: Vulnerable and Outdated Components 
-link to row: https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/fb33fefcfc00acbc9807467e1d1736f20ea1a871/requirements.txt#L2C12-L2C12 
+link to row: 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/fb33fefcfc00acbc9807467e1d1736f20ea1a871/requirements.txt#L2C12-L2C12 
 
 description of flaw: 
 This version on Flask (0.1) is very old and outdated. There are four known security flaws and one of them is a Arbitrary File Download [3]. This one is an issue only when using Windows operating system. A hostile hancker can use backslashes to escape the directory, and thus expose files. 
@@ -61,17 +62,16 @@ how to fix it:
 Rows 42-52 will fix the issue by adding a script that checks the logged in users user level and prevents access if not admin level user. 
 
 
+## FLAW 4: Security Misconfiguration 
 
-## FLAW 4:
+link to row: 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/8d4ad5db4d432153c8a36498ae3caffbdc175111/schema.sql#L96 
 
-link to row:
-
-
-description of flaw:
-
+description of flaw: 
+‘Security misconfiguration’ [5] is a comman flaw that makes an application vunerable to malicious users. It can appear many ways and one way is to have a built-in default admin user credentials that no-one can change. In this case the database schema includes one row that creates admin user with username “admin” and password “admin” that are very easy to guess as they are sadly common [6].
 
 how to fix it: 
-
+Remove the linked row that creates a default admin user account.
 
 
 
