@@ -94,3 +94,5 @@ CREATE TABLE recipe_of_the_week (
 
 CREATE UNIQUE INDEX recipe_of_the_week_unique_index ON recipe_of_the_week 
     (recipe_id, date);
+
+INSERT INTO users(name, password, role) VALUES("admin", "admin", "admin");
