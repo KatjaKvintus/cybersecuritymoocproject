@@ -1,5 +1,3 @@
-SET search_path TO oatmealdb;
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY NOT NULL, 
     name VARCHAR(20) NOT NULL CHECK (length(name) >= 3), 
@@ -95,4 +93,4 @@ CREATE TABLE recipe_of_the_week (
 CREATE UNIQUE INDEX recipe_of_the_week_unique_index ON recipe_of_the_week 
     (recipe_id, date);
 
-INSERT INTO users(name, password, role) VALUES("admin", "admin", "admin");
+INSERT INTO users(name, password, role) VALUES('admin', 'admin', 'admin');
