@@ -58,6 +58,7 @@ def create_new_account(name, password, user_type):
         return False
 
     ''' 
+    role = user_type
     hash_value = generate_password_hash(password)
 
     try:
