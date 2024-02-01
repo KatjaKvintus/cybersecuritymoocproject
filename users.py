@@ -28,6 +28,7 @@ def log_in_user(name, password):
 
     if not user:
         return False
+    
 
     #if not check_password_hash(user[1], password):
     if not check_username_and_password_match(name, password):
@@ -44,7 +45,6 @@ def log_in_user(name, password):
 def create_new_account(name, password, user_type):
     '''Creates new user account and directs to login'''
 
-    #hash_value = generate_password_hash(password)
     role = user_type
 
     try:
@@ -58,6 +58,8 @@ def create_new_account(name, password, user_type):
         return False
 
     ''' 
+    hash_value = generate_password_hash(password)
+
     try:
 
         sql = text("""INSERT INTO users (name, password, role)
