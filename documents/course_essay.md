@@ -75,28 +75,22 @@ Remove the linked row that creates a default admin user account.
 
 
 
-## FLAW 5:
+## FLAW 5: Cryptographic Failures 
 
 link to row:
-
-
-description of flaw:
-
-
-how to fix it: 
-
-
-
-
-## FLAW 6:
-
-link to row:
-
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/d2861f06e9016eb8c1203c80bdabfce45d8ca56d/users.py#L52 
 
 description of flaw:
-
+Cryptographic failure flaw means that sensitive data is not protected with cryptography [7]. In this case all users passwords are stored in the database as they are, not crypted in any way. 
 
 how to fix it: 
+There is a package that provides tools for this. Verkzeung has a ‘generate_password_hash()’ function [8] that stores passwords securely as a hash value. To fix the issue in this application you have to import the tools and use functions ‘generate_password_hash()’ when creating a new user account and ‘check_password_hash()’ function when checking the pasword validity.
+
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/926a199b2ccb3245ed47c4f5ba7edeac54167129/users.py#L4 (add import)
+
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/926a199b2ccb3245ed47c4f5ba7edeac54167129/users.py#L33 (replace line 34 with this)
+
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/d2861f06e9016eb8c1203c80bdabfce45d8ca56d/users.py#L61 (replace the ‘create_new_account’ function contents with lines 61-74)
 
 
 
