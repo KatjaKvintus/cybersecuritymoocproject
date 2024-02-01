@@ -33,4 +33,7 @@ Start the application:
 flask run
 ```
 
-Copy the web address from row starting "* Running on..." ja paste it into a brosewr address bar.
+Copy the web address from row starting "* Running on..." ja paste it into a browser address bar.
+
+If you want to create a new admin user, you need an admin key. You will find it users.py file:
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/5cff06c0035bb7e529c65a756b148c3bef14b80b/users.py#L10
