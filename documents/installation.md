@@ -32,3 +32,5 @@ Start the application:
 ```bash
 flask run
 ```
+
+Copy the web address from row starting "* Running on..." ja paste it into a brosewr address bar.
