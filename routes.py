@@ -349,11 +349,12 @@ def admin_tools():
     '''Functionalities for only admin level users'''
 
     ''' 
-    user_role = users.session.user_role
+    #Fix for flaw 3: checking the user role in backend
 
-    if user_role != "admin":
-        return render_template("error.html", message="this section is only for users.")
+    if users.get_user_role() != "admin":
+        return render_template("error.html", message="ERROR: This section is only for admins.")
     '''
+
     return render_template("admin_tools.html")
 
 

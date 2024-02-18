@@ -111,3 +111,8 @@ def log_out():
 
     del session["user_id"]
     del session["user_name"]
+
+
+def get_user_role():
+    '''return the user id for logged in user'''
+    return session.get("user_role", 0)
