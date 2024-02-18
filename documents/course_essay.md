@@ -47,24 +47,28 @@ Flask== 3.0.1
 
 ## FLAW 3: Broken Access Control
 
-link to row:
-https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
+link to rows:
+(backend) https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/routes.py#L352 
+(Missing user level check in rows 352-355)
+
+(frontend) https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
 (Missing script in rows 43-51)
-https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/routes.py#L352 
-(Missing check in rows 352-355)
 
 description of flaw:
-“Broken access control” [4] is the most common flaw in OWASP 2021 list. It means that users of the application can use functions that their user level don’t allow, or access data their user level does not allow. Usually this means that regular users can access admin level functions, or visitors have more than read level rights. In my example the application lacks a script that controls access to admin tools, letting any signed in user use those.
+“Broken access control” [4] is the most common flaw in OWASP 2021 list. It means that users of the application can use functions that their user level don’t allow, or access data their user level does not allow. Usually this means that regular users can access admin level functions, or visitors have more than read level rights. In my example the application lacks a check that controls access to admin tools, letting any signed in user use those.
 
-The link points out a missing script that checks the user’s user level when trying to enter admin tools page. Without it any user can access admin section of the app and get access every admin tool,  and one of those is for creating new admin users. 
+There are two links above that point out the flaw. First one points out to a missing backend check, that checks the user level before granting entry to the admin tools. The second one is a missing check script in html file. The first one is the one that is actually needed. The second one is just more user friendly, showing user the error message in a pop-up window instead of directing to an error message page. A malicious hacker can disable the script in browser so the script does not actually protect the application.
+
+If user level is not checked trustworthy, any user can access the admin section of the app and get access every admin tool,  and one of those is for creating new admin users. 
 
 how to fix it: 
-The fix is two-part. First: activating rows 43-51(at the moment as a comment)  in mainpage.html will fix the issue in front-enf by adding a specific script that checks the logged in users user level and prevents access if not admin level user. 
-https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
-
-But  this isn’t enough as a malicious attacker can just disable that check in browser. So we will need a backend check too. The fix in routes.py in lines 352-355 checks the user level from sessions, using the get_user_role() function from users.py, and if it is “user”, denies access to admin tools. 
+The fix in routes.py in lines 352-355 checks the user level from sessions, using the get_user_role() function from users.py, and if it is “user”, denies access to admin tools. 
 https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/routes.py#L352 
+
 https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/f4a92107864996d1e8f1d2cb85f47801a955ac12/users.py#L116 
+
+Activating rows 43-51(at the moment as a comment) in mainpage.html will provide the not-so-reliable front-end solution by adding a specific script that checks the logged in users user level and prevents access if not admin level user. 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
 
 
 ### FLAW 4: Security Misconfiguration 
