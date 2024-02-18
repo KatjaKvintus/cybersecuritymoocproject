@@ -114,5 +114,6 @@ def log_out():
 
 
 def get_user_role():
-    '''return the user id for logged in user'''
+    '''return the user role for logged in user'''
+    
     return session.get("user_role", 0)
