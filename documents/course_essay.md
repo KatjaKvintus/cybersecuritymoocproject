@@ -49,7 +49,9 @@ Flask== 3.0.1
 
 link to row:
 https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
-(Missing element in rows 43-51
+(Missing script in rows 43-51)
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/routes.py#L352 
+(Missing check in rows 352-355)
 
 description of flaw:
 “Broken access control” [4] is the most common flaw in OWASP 2021 list. It means that users of the application can use functions that their user level don’t allow, or access data their user level does not allow. Usually this means that regular users can access admin level functions, or visitors have more than read level rights. In my example the application lacks a script that controls access to admin tools, letting any signed in user use those.
@@ -57,9 +59,12 @@ description of flaw:
 The link points out a missing script that checks the user’s user level when trying to enter admin tools page. Without it any user can access admin section of the app and get access every admin tool,  and one of those is for creating new admin users. 
 
 how to fix it: 
-Activating rows 43-51 (at the moment as a comment) will fix the issue by adding a specific script that checks the logged in users user level and prevents access if not admin level user. 
+The fix is two-part. First: activating rows 43-51(at the moment as a comment)  in mainpage.html will fix the issue in front-enf by adding a specific script that checks the logged in users user level and prevents access if not admin level user. 
 https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/templates/mainpage.html#L42 
 
+But  this isn’t enough as a malicious attacker can just disable that check in browser. So we will need a backend check too. The fix in routes.py in lines 352-355 checks the user level from sessions, using the get_user_role() function from users.py, and if it is “user”, denies access to admin tools. 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/82eb38aa08e8d80b56862d2ace80af10ae31c84a/routes.py#L352 
+https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/f4a92107864996d1e8f1d2cb85f47801a955ac12/users.py#L116 
 
 
 ### FLAW 4: Security Misconfiguration 
