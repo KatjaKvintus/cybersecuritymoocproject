@@ -12,8 +12,6 @@ import secrets
 
 
 
-
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     '''Route: index.html'''
@@ -354,16 +352,12 @@ def random():
 def admin_tools():
     '''Functionalities for only admin level users'''
 
-
-    #''' 
+    ''' 
     #Fix for flaw 3: checking the user role in backend
-
-    #if session["csrf_token"] != request.form["csrf_token"]:
-    #    return render_template("error.html", message="TOKEN ERROR: This section is only for admins.")
 
     if users.get_user_role() != "admin":
         return render_template("error.html", message="This section is only for admins.")
-    #'''
+    '''
 
     return render_template("admin_tools.html")
 

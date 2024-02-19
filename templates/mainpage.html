@@ -35,7 +35,7 @@
 
 <form action="/admin_tools" onsubmit="return check(this)">
 <input type="hidden" name="admin_tools" value="{{ session.user_role }}">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<!-- <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"> -->
 <input type="submit" value="Admin tools">
 </form>
 </nav>
