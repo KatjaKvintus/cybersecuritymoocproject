@@ -1,12 +1,15 @@
 '''Module for handling page requests'''
 from random import randint
 from flask import redirect, render_template, request, session, abort
+#from django.views.decorators.csrf import csrf_exempt
 from app import app
 import stars
 import users
 import recipes
 import comments
 import favorites
+import secrets
+
 
 
 
@@ -34,6 +37,9 @@ def login():
     # Check if the username exists and matches with the password
     if not users.log_in_user(username, password):
         return render_template("error.html", message="incorrect username or password")
+    
+    #session["csrf_token"] = secrets.token_hex(16)
+
 
     return redirect("/mainpage")
 
@@ -286,7 +292,7 @@ def add_favorite():
 
 @app.route("/my_favorites", methods=["GET", "POST"])
 def my_favorites():
-    '''Listing of logged in users favprites recipes'''
+    '''Listing of logged in users favorites recipes'''
 
     user_id = users.get_user_id()
     list_of_search_matching_recipes = favorites.show_my_favorites(user_id)
@@ -348,12 +354,16 @@ def random():
 def admin_tools():
     '''Functionalities for only admin level users'''
 
-    ''' 
+
+    #''' 
     #Fix for flaw 3: checking the user role in backend
 
+    #if session["csrf_token"] != request.form["csrf_token"]:
+    #    return render_template("error.html", message="TOKEN ERROR: This section is only for admins.")
+
     if users.get_user_role() != "admin":
-        return render_template("error.html", message="ERROR: This section is only for admins.")
-    '''
+        return render_template("error.html", message="This section is only for admins.")
+    #'''
 
     return render_template("admin_tools.html")
 

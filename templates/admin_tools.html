@@ -17,6 +17,7 @@
 
 <b>Add new admin user:</b><BR><BR>
     <form action="/create_new_admin" method="post" onsubmit="return check(this)">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         Choose admin username: <BR><input type="text" name="username" minlength="3"> <BR><BR>
         Choose password: <BR><input type="password" name="password1"> <BR><BR>
         Repeat the password: <BR><input type="password" name="password2"> <BR><BR>
