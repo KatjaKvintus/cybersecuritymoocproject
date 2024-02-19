@@ -54,9 +54,9 @@ https://github.com/KatjaKvintus/cybersecuritymoocproject/blob/350e5ea00088523055
 description of flaw:
 “Broken access control” [4] is the most common flaw in OWASP 2021 list. It means that users of the application can use functions that their user level don’t allow, or access data their user level does not allow. Usually this means that regular users can access admin level functions, or visitors have more than read level rights. In my example the application lacks a check that controls access to admin tools, letting any signed in user use those.
 
-The link above points out the flaw, a missing backend check, that checks the user level before granting entry to the admin tools. There is a script that tries to prevent user from accessing admin tools if they are not an admin, but a malicious hacker can disable the script in browser so the script does not actually protect the application.
+The link above points out the flaw, a missing backend check, that checks the user level before granting entry to the admin tools. (There is also a script in templates/mainpage.html that tries to prevent user from accessing admin tools if they are not an admin, but a malicious hacker can disable the script in browser so the script does not actually protect the application.)
 
-If user level is not checked trustworthy, any user can access the admin section of the app and get access every admin tool,  and one of those is for creating new admin users. 
+If user level is not checked trustworthy, any user can access the admin section of the app and get access to every admin tool,  and one of those is for creating new admin users. 
 
 how to fix it: 
 The fix in routes.py in lines 352-355 checks the user level from sessions, using the get_user_role() function from users.py, and if it is “user”, denies access to admin tools. 
