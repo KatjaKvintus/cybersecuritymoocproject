@@ -78,6 +78,43 @@ def create_new_account(name, password, user_type):
     return log_in_user(name, password)
 
 
+def create_new_admin(name, password):
+    '''Creates new user account and directs to login'''
+
+    role = "admin"
+
+    try:
+
+        sql = text("INSERT INTO users (name, password, role) VALUES ('" + name + "', '" + password + "', '" + role + "')")
+
+        db.session.execute(sql)       
+        db.session.commit()
+
+    except SystemError:
+        return False
+
+    ''' 
+    role = user_type
+    hash_value = generate_password_hash(password)
+
+    try:
+
+        sql = text("""INSERT INTO users (name, password, role)
+                 VALUES (:name, :password, :role)""")
+
+        db.session.execute(sql, {"name":name, "password":hash_value, "role":role})       
+        db.session.commit()
+        
+
+    except SystemError:
+        return False
+    
+        '''
+
+    return True
+
+
+
 def check_username_and_password_match(username, password):
     '''Returns True is given password and username matches'''
 
@@ -111,6 +148,7 @@ def log_out():
 
     del session["user_id"]
     del session["user_name"]
+    del session["csrf_token"]
 
 
 def get_user_role():

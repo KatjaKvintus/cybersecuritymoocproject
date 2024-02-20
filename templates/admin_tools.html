@@ -8,8 +8,10 @@
 
 <h3>Admin tools</h3>
 <BR><BR>
+    <B>Hi, {{ session.user_name }} <i>({{ session.user_role }})!</B></i>
+    <BR><BR>
 
-<form action="/check_all_recipes">
+<form action="/check_all_recipes" method="post" >
 <input type="submit" value="Publish oatmeal of the week">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>

@@ -33,9 +33,9 @@
 <input type="submit" value="My favorites">
 </form><BR>
 
-<form action="/admin_tools" onsubmit="return check(this)">
+<form action="/admin_tools" onsubmit="return check(this)", method="post">
 <input type="hidden" name="admin_tools" value="{{ session.user_role }}">
-<!-- <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"> -->
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 <input type="submit" value="Admin tools">
 </form>
 </nav>

@@ -13,7 +13,8 @@
 <BR>
 
 <form action="/set_recipe_of_the_week" method="post" onsubmit="return check(this)">
-I choose recipe number:
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+I choose recipe number: <BR>
 <input type="text" name="recipe_id"><BR>
 <input type="submit" value="Publish">
 </form>
@@ -24,7 +25,7 @@ I choose recipe number:
             alert("Error: too small number. Please choose from the list. ");
             return false;
         }
-        if (form.recipe_id.value > {{ list_size }}) {
+        if (form.recipe_id.value >  largest_recipe_id ) {
             alert("Error: too big number. Please choose from the list. ");
             return false;
         }

@@ -348,18 +348,20 @@ def random():
                             recipe_comments=recipe_comments, note=note)
 
 
-@app.route("/admin_tools")
+@app.route("/admin_tools", methods=["POST"])
 def admin_tools():
     '''Functionalities for only admin level users'''
 
-    ''' 
-    #Fix for flaw 3: checking the user role in backend
+    #Fix for flaw 3
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+            
+    if request.method == "POST":
 
-    if users.get_user_role() != "admin":
-        return render_template("error.html", message="This section is only for admins.")
-    '''
+        if users.get_user_role() != "admin":
+            return render_template("error.html", message="This section is only for admins.")
 
-    return render_template("admin_tools.html")
+        return render_template("admin_tools.html")
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -369,28 +371,34 @@ def logout():
     return render_template("logout.html")
 
 
-@app.route("/check_all_recipes")
+@app.route("/check_all_recipes", methods=["POST"])
 def check_all_recipes():
     '''Provides recipe listing for admins to choose one as the recipe of the week'''
 
-    recipe_list = recipes.get_all_recipes()
-    list_size = len(recipe_list)
-
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
+            
+    if request.method == "POST":
 
-    return render_template("recipe_of_the_week.html",
-                            recipe_list=recipe_list, list_size=list_size)
+        recipe_list = recipes.get_all_recipes()
+        largest_recipe_id = recipes.max_id_in_recipes_table
+
+        return render_template("recipe_of_the_week.html",
+                            recipe_list=recipe_list, largest_recipe_id=largest_recipe_id)
 
 
 @app.route("/set_recipe_of_the_week", methods=["GET", "POST"])
 def recipe_of_the_week():
     '''Setting the recipe of the week (for admins only)'''
 
-    recipe_id = request.form["recipe_id"]
-    recipes.set_recipe_of_the_week(recipe_id)
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
-    return render_template("succesfull_message.html",
+    if request.method == "POST":
+        recipe_id = request.form["recipe_id"]
+        recipes.set_recipe_of_the_week(recipe_id)
+
+        return render_template("succesfull_message.html",
                             message="New recipe of the week published.")
 
 
@@ -449,6 +457,9 @@ def change_fav_status():
 def create_new_admin():
     '''Admin can create a new admin user account'''
 
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     if request.method == "GET":
         return render_template("register.html")
 
@@ -482,7 +493,7 @@ def create_new_admin():
                                 message="This password is too short. " +
                                "Please choose one that has at least 3 characters.")
 
-    if not users.create_new_account(username, password1, user_type):
+    if not users.create_new_admin(username, password1):
         return render_template("error.html",
                                 message="Failed to create the user account.")
 

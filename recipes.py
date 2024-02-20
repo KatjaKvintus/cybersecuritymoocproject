@@ -156,3 +156,12 @@ def fetch_recipe_names():
         recipe_names.append(item[1])
 
     return recipe_names
+
+
+def max_id_in_recipes_table():
+    '''Returns the largest id in the recipes table'''
+
+    sql = text("SELECT MAX(id) as max_id FROM recipes")
+    result = db.session.execute(sql)
+    max_id = result.fetchall()
+    return max_id[0]
