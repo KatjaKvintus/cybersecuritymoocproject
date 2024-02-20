@@ -394,6 +394,10 @@ def recipe_of_the_week():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
 
+    if request.form["recipe_id"] == 0:
+        return render_template("error.html",
+                                message="No recipes available.")
+
     if request.method == "POST":
         recipe_id = request.form["recipe_id"]
         recipes.set_recipe_of_the_week(recipe_id)

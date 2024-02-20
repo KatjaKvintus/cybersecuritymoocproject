@@ -97,6 +97,7 @@ def set_recipe_of_the_week(recipe_id):
     '''Admin function: one of the database recipes can be set
     as the recipe of the week'''
 
+
     this_date = str(date.today())
 
     try:
@@ -164,4 +165,8 @@ def max_id_in_recipes_table():
     sql = text("SELECT MAX(id) as max_id FROM recipes")
     result = db.session.execute(sql)
     max_id = result.fetchall()
-    return max_id[0]
+
+    if len(max_id) < 1 or not max_id:
+        return 0
+    else:
+        return max_id[0]
