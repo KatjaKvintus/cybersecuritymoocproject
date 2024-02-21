@@ -114,7 +114,6 @@ def create_new_admin(name, password):
     return True
 
 
-
 def check_username_and_password_match(username, password):
     '''Returns True is given password and username matches'''
 
@@ -151,7 +150,39 @@ def log_out():
     del session["csrf_token"]
 
 
-def get_user_role():
+def get_session_user_role():
     '''return the user role for logged in user'''
-    
     return session.get("user_role", 0)
+
+
+def get_user_role_from_db():
+    '''Takes logged in users username and returns userrole
+    that is saved to the database for that username.'''
+
+    try:
+        name = session["username"]
+        sql = text ("""SELECT role FROM users WHERE name=:name""") 
+        result = db.session.execute(sql, {"name":name})
+        this_role = result.fetchone()
+        return str(this_role[0])
+        
+    except SystemError:
+        return 0
+
+
+def check_if_loggend_in_user_is_admin():
+    '''Checks if the currently logged in user is admin. Returns
+    True if is, False if not'''
+
+    if get_session_user_role() != "admin":
+        return False
+    elif session["user_role"] != "admin":
+        return False
+    elif get_user_role_from_db() != "admin":
+        return False
+    elif get_session_user_role() == "":
+        return False
+    elif not session.get("user_id"):
+        return False
+    else:
+        return True

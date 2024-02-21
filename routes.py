@@ -36,8 +36,7 @@ def login():
     if not users.log_in_user(username, password):
         return render_template("error.html", message="incorrect username or password")
     
-    #session["csrf_token"] = secrets.token_hex(16)
-
+    session["csrf_token"] = secrets.token_hex(16)
 
     return redirect("/mainpage")
 
@@ -358,7 +357,7 @@ def admin_tools():
             
     if request.method == "POST":
 
-        if users.get_user_role() != "admin":
+        if not users.check_if_loggend_in_user_is_admin():
             return render_template("error.html", message="This section is only for admins.")
 
         return render_template("admin_tools.html")
@@ -375,7 +374,7 @@ def logout():
 def check_all_recipes():
     '''Provides recipe listing for admins to choose one as the recipe of the week'''
 
-    if session["csrf_token"] != request.form["csrf_token"]:
+    if not users.check_if_loggend_in_user_is_admin():
         abort(403)
             
     if request.method == "POST":
@@ -391,7 +390,7 @@ def check_all_recipes():
 def recipe_of_the_week():
     '''Setting the recipe of the week (for admins only)'''
 
-    if session["csrf_token"] != request.form["csrf_token"]:
+    if not users.check_if_loggend_in_user_is_admin():
         abort(403)
 
     if request.form["recipe_id"] == 0:
@@ -461,7 +460,7 @@ def change_fav_status():
 def create_new_admin():
     '''Admin can create a new admin user account'''
 
-    if session["csrf_token"] != request.form["csrf_token"]:
+    if not users.check_if_loggend_in_user_is_admin():
         abort(403)
 
     if request.method == "GET":
