@@ -351,7 +351,6 @@ def random():
 def admin_tools():
     '''Functionalities for only admin level users'''
 
-    #Fix for flaw 3
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
             
