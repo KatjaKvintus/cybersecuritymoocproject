@@ -57,9 +57,9 @@ def create_new_account(name, password, user_type):
     except SystemError:
         return False
 
+    # hash_value = generate_password_hash(password)
     ''' 
     role = user_type
-    hash_value = generate_password_hash(password)
 
     try:
 
