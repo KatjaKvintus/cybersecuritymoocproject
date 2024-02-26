@@ -57,7 +57,7 @@ def create_new_account(name, password, user_type):
     except SystemError:
         return False
 
-    ''' # Fix to flaw 1
+    ''' 
     role = user_type
     hash_value = generate_password_hash(password)
 
@@ -93,7 +93,7 @@ def create_new_admin(name, password):
     except SystemError:
         return False
 
-    ''' # Another method to fix the flaw 1
+    ''' 
     role = user_type
     hash_value = generate_password_hash(password)
 
