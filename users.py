@@ -93,9 +93,9 @@ def create_new_admin(name, password):
     except SystemError:
         return False
 
+    #hash_value = generate_password_hash(password)
     ''' 
     role = user_type
-    hash_value = generate_password_hash(password)
 
     try:
 
