@@ -57,7 +57,7 @@ def create_new_account(name, password, user_type):
     except SystemError:
         return False
 
-    ''' 
+    ''' # Fix to flaw 1
     role = user_type
     hash_value = generate_password_hash(password)
 
@@ -93,7 +93,7 @@ def create_new_admin(name, password):
     except SystemError:
         return False
 
-    ''' 
+    ''' # Another method to fix the flaw 1
     role = user_type
     hash_value = generate_password_hash(password)
 
@@ -170,10 +170,13 @@ def get_user_role_from_db():
         return 0
 
 
-def check_if_loggend_in_user_is_admin():
+# Fix for flaw 3: checking the user level
+#def check_if_loggend_in_user_is_admin():
+    
     '''Checks if the currently logged in user is admin. Returns
     True if is, False if not'''
 
+    '''
     if get_session_user_role() != "admin":
         return False
     elif session["user_role"] != "admin":
@@ -186,3 +189,4 @@ def check_if_loggend_in_user_is_admin():
         return False
     else:
         return True
+    '''

@@ -357,9 +357,11 @@ def admin_tools():
             
     if request.method == "POST":
 
+        '''
+        # Fix for flaw 3: checking the user level
         if not users.check_if_loggend_in_user_is_admin():
             return render_template("error.html", message="This section is only for admins.")
-
+        '''
         return render_template("admin_tools.html")
 
 
@@ -374,9 +376,12 @@ def logout():
 def check_all_recipes():
     '''Provides recipe listing for admins to choose one as the recipe of the week'''
 
+    '''
+    # Fix for flaw 3: checking the user level
     if not users.check_if_loggend_in_user_is_admin():
         abort(403)
-            
+    '''
+
     if request.method == "POST":
 
         recipe_list = recipes.get_all_recipes()
@@ -390,8 +395,11 @@ def check_all_recipes():
 def recipe_of_the_week():
     '''Setting the recipe of the week (for admins only)'''
 
+    '''
+    # Fix for flaw 3: checking the user level
     if not users.check_if_loggend_in_user_is_admin():
         abort(403)
+    '''
 
     if request.form["recipe_id"] == 0:
         return render_template("error.html",
